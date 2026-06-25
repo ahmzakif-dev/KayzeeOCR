@@ -1,0 +1,159 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://kayzee-ocr/schemas/output_schema.json",
+  "title": "KayzeeOCR Page Output",
+  "description": "Structured OCR result for a single document page produced by the KayzeeOCR pipeline.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "document_id",
+    "source_file",
+    "page_number",
+    "page_width",
+    "page_height",
+    "processing_time_ms",
+    "model_version",
+    "elements"
+  ],
+  "properties": {
+    "document_id": {
+      "type": "string",
+      "description": "Stable identifier for this page result (UUID or filename-based)."
+    },
+    "source_file": {
+      "type": "string",
+      "description": "Original input file path or name."
+    },
+    "page_number": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "1-indexed page number within the source document."
+    },
+    "page_width": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Page width in pixels (as processed)."
+    },
+    "page_height": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Page height in pixels (as processed)."
+    },
+    "processing_time_ms": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Wall-clock processing time for this page, in milliseconds."
+    },
+    "model_version": {
+      "type": "string",
+      "description": "Identifier of the model/pipeline version that produced this result."
+    },
+    "elements": {
+      "type": "array",
+      "description": "Detected layout elements, ideally already in reading order.",
+      "items": { "$ref": "#/definitions/element" }
+    }
+  },
+  "definitions": {
+    "element": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "bbox",
+        "bbox_pixel",
+        "reading_order",
+        "confidence",
+        "content"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^elem_[0-9]{3,}$",
+          "description": "Element id, format 'elem_001', 'elem_002', ..."
+        },
+        "type": {
+          "type": "string",
+          "description": "Layout element class (one of the 17 supported types).",
+          "enum": [
+            "title",
+            "heading_h1",
+            "heading_h2",
+            "heading_h3",
+            "paragraph",
+            "list_item_ordered",
+            "list_item_unordered",
+            "table_simple",
+            "table_merged",
+            "table_borderless",
+            "page_header",
+            "page_footer",
+            "page_number",
+            "figure",
+            "caption",
+            "footnote",
+            "math_formula"
+          ]
+        },
+        "bbox": {
+          "type": "array",
+          "description": "Relative bounding box [x1, y1, x2, y2], each in 0.0-1.0.",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+        },
+        "bbox_pixel": {
+          "type": "array",
+          "description": "Absolute pixel bounding box [x1, y1, x2, y2].",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": { "type": "integer", "minimum": 0 }
+        },
+        "reading_order": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Reading order position, starting at 1."
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Detection/recognition confidence in 0.0-1.0."
+        },
+        "content": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Recognized content. Field used depends on element type.",
+          "required": ["text", "html", "latex", "image_ref"],
+          "properties": {
+            "text": {
+              "type": ["string", "null"],
+              "description": "Extracted plain text (paragraphs, headings, captions, ...)."
+            },
+            "html": {
+              "type": ["string", "null"],
+              "description": "HTML table markup (for table_* elements)."
+            },
+            "latex": {
+              "type": ["string", "null"],
+              "description": "LaTeX source (for math_formula elements)."
+            },
+            "image_ref": {
+              "type": ["string", "null"],
+              "description": "Path to a cropped image (for figure elements)."
+            }
+          }
+        },
+        "language": {
+          "type": ["string", "null"],
+          "description": "Detected language code, e.g. 'id', 'en'."
+        },
+        "is_truncated": {
+          "type": "boolean",
+          "description": "Whether the element is cut off at a page edge."
+        }
+      }
+    }
+  }
+}
