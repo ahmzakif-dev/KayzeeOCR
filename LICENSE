@@ -1,0 +1,36 @@
+KAYZEEOCR Research License
+Version 1.0, 2026
+Copyright (c) 2026 Ahmad Zaki Firdaus
+
+PERMISSIONS
+This license grants permission to use, reproduce, modify, and
+distribute this software FREE OF CHARGE for the following purposes:
+
+  - Academic research (undergraduate thesis, graduate research, papers)
+  - Personal experimentation and learning
+  - Non-commercial open-source projects
+  - Teaching and education
+
+RESTRICTIONS
+The following uses are NOT permitted without a separate written
+commercial license:
+
+  - Use in commercial products or services
+  - Integration into company pipelines for business purposes
+  - Deployment as SaaS, paid API, or similar services
+  - Use by commercial entities (companies, startups, etc.)
+    as part of their business operations
+
+CONDITIONS
+1. Attribution: any publication using this software must include:
+   "KayzeeOCR by Ahmad Zaki Firdaus (github.com/ahmzakif-dev/KayzeeOCR)"
+2. Distribution: this license must be included with any distribution
+   of this software or its derivatives
+3. Derived model weights: models fine-tuned from KayzeeOCR weights
+   are subject to the same license terms
+
+DISCLAIMER
+THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND.
+THE AUTHORS ARE NOT LIABLE FOR ANY DAMAGES ARISING FROM ITS USE.
+
+For commercial licensing inquiries: ahmzakif.dev@gmail.com

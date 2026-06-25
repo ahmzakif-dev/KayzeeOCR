@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Model weights (jangan di-push ke GitHub, terlalu besar)
+*.bin
+*.safetensors
+*.gguf
+*.pt
+*.pth
+model_weights/
+checkpoints/
+lora-adapter*/
+fine-tuned-*/
+
+# Pipeline outputs
+outputs/
+*.json
+!schemas/output_schema.json
+
+# Sample inputs (opsional, uncomment jika tidak mau push)
+# sample_inputs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Environment variables
+.env
+.env.*
